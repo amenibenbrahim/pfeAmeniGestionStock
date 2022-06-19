@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--start head -->
+<div th:replace="fragments/head :: head"></div>
+<!--end head -->
+ 
+ <body>
+  
+  <!-- Sidenav -->
+  <div th:replace="fragments/nav :: nav"></div>
+  <!-- Sidenav -->
+
+   <!-- Main content -->
+   <div class="main-content" id="panel">
+    
+    <!-- Topnav -->
+ 
+    <div th:replace="fragments/header :: header"></div>
+    <!-- Topnav -->
+
+
+
+    
+     <!-- Header -->
+     <div class="header pb-6">
+        <div class="container-fluid">
+          <div class="header-body">
+            <div class="row align-items-center py-4">
+              <div class="col-lg-6 col-7">
+                <h6 class="h2 d-inline-block mb-0"></h6>
+                
+              </div>
+              <div class="col-lg-6 col-5 text-right">
+                <button type="button"  onclick="window.location.href='/gestion-caisse'" class="btn btn-danger btn-icon" >
+                  <span class="btn-inner--icon"><i class="ni ni-ambulance"></i></span>
+                  <span class="btn-inner--text">Faire retour</span>
+                </button>
+               
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     <!-- Page content -->
+     <div class="container-fluid mt--6">
+       <div class="row">
+         <div class="col">
+           <div class="card border-0">
+             
+             
+                <img alt="centered image" style="display: flex;justify-content: center;
+                height: 600px; justify-content: center;" 
+                src="../assets/img/repture.png">
+                
+           
+           </div>
+         </div>
+       </div>
+
+     
+        <!-- Footer -->
+      <div th:replace="fragments/footer :: footer"></div>
+      <!-- Footer -->
+
+
+     </div>
+   </div>
+   <!-- Argon Scripts -->
+   <!-- Core -->
+   <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
+   <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
+   <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+   <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+   <!-- Optional JS -->
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+   <!-- Argon JS -->
+   <script src="../../assets/js/argon.js?v=1.1.0"></script>
+   <!-- Demo JS - remove this in your project -->
+   <script src="../../assets/js/demo.min.js"></script>
+ </body>
+ 
+ </html>

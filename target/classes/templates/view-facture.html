@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--start head -->
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+    <meta name="author" content="Creative Tim">
+    <title> Facture</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="../assets/vendor/nucleo/css/nucleo.css" type="text/css">
+    <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+    <!-- Page plugins -->
+    <link rel="stylesheet" href="../assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="../assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="../assets/css/argon.css?v=1.1.0" type="text/css">
+    </head>
+<!--end head -->
+
+<body>
+  <!-- Sidenav -->
+  <div th:replace="fragments/nav :: nav"></div>
+  <!-- Sidenav -->
+
+
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    <div th:replace="fragments/header :: header"></div>
+    <!-- Topnav -->
+
+
+    <!-- Header -->
+    <div class="header pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 d-inline-block mb-0">Facture Client</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links">
+                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Facture</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+              <!-- <button type="button" 
+                  onclick="window.location.href='/gestion-caisse'"class="btn btn-slack btn-icon" >
+                <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
+                <span class="btn-inner--text">Ajout</span>
+              </button> -->
+
+              <!-- Modal Add -->
+              
+             <!-- Modal Add -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <!-- Page content -->
+     <div class="container-fluid mt--6">
+       <div class="row">
+         <div class="col-xl-12">
+           <div class="card-wrapper">
+             <!-- Custom form validation -->
+             <div class="card">
+               <!-- Card header -->
+               <div class="card-header">
+                 <h3 class="mb-0">Facture : </h3>
+               </div>
+               <!-- Card body -->
+               <div class="card-body">
+                 
+
+
+            
+
+                  <div class="col-12 mb-3">
+                    <div class="table-responsive py-4" >
+                      <table
+                        class="table table-striped table-sm table-bordered"
+                        id="datatable-buttons">
+                        <thead>
+                          <tr>
+                              
+                            <th>#ID</th>
+                            <th>Date</th>
+                            <th>Nom Client</th>
+                            <th>Produits</th>
+                            <th>total</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>  [[${commande.id}]]  </td>
+                          
+                          
+                            <td th:text="${#dates.format(commande.date, 'dd-MM-yyyy HH:mm')}"> </td>
+                            
+                            <td>[[${commande.nom_client}]]</td>
+
+                           
+                            <td>
+                                <table class="table align-middle mb-0" >
+                                    <thead class="table-light">
+                                        <tr>
+                                            
+                                            
+                                            <th>Liste des produits</th>
+        
+                                            <th>Prix UN.</th>
+        
+                                            <th>Quantité</th>
+                                            
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="prods, x : ${commande.prods}">
+                                          <td th:each="produit : ${produit}" th:if="${produit.id} == ${commande.prods[x.index].nomProdCom}">
+                                            [[${produit.nomProd}]]
+                                          </td>
+                                          <td th:each="produit : ${produit}" th:if="${produit.id} == ${commande.prods[x.index].nomProdCom}">
+                                            
+                                            <span th:text="${#numbers.formatDecimal(commande.prods[x.index].prixProdCom,1,'DEFAULT',2,'COMMA')}" ></span> 
+                                            <span style="color:black;font-weight:bold"> TND </span>
+                                          </td>
+                                          <td th:each="produit : ${produit}" th:if="${produit.id} == ${commande.prods[x.index].nomProdCom}">
+                                            [[${commande.prods[x.index].qteProdCom}]]
+                                          </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+
+                            <td style="font-weight:bold" >
+                                <span class="h2 font-weight-bold mb-0 text-black-50" th:text="${#numbers.formatDecimal(commande.Total,1,'DEFAULT',2,'COMMA')}" ></span> 
+                                <span style="color:black;font-weight:bold"> TND </span>
+                              </td>
+
+                         </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+              
+                
+               </div>
+             </div>
+            
+            
+           </div>
+         </div>
+       </div>
+      <!-- Footer -->
+      <div th:replace="fragments/footer :: footer"></div>
+      <!-- Footer -->
+       
+     </div>
+   </div>
+  
+
+   <!-- Core -->
+   <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
+   <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
+   <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+   <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+
+      <!-- Optional JS -->
+      <script src="../../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+      <script src="../../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+      <script src="../../assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+      <script src="../../assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+      <script src="../../assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+      <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+      <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+      <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+    
+
+  
+  
+   <!-- Argon JS -->
+   <script src="../../assets/js/argon.js?v=1.1.0"></script>
+   <!-- Demo JS - remove this in your project -->
+   <script src="../../assets/js/demo.min.js"></script>
+ </body>
+ 
+ </html>

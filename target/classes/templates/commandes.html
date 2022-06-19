@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--start head -->
+<div th:replace="fragments/head :: head"></div>
+<!--end head -->
+
+<body>
+  <!-- Sidenav -->
+  <div th:replace="fragments/nav :: nav"></div>
+  <!-- Sidenav -->
+
+
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    <div th:replace="fragments/header :: header"></div>
+    <!-- Topnav -->
+
+
+    <!-- Header -->
+    <div class="header pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 d-inline-block mb-0">Commandes</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links">
+                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Commandes</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+              <button type="button" 
+                  onclick="window.location.href='/gestion-caisse'"class="btn btn-slack btn-icon" >
+                <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
+                <span class="btn-inner--text">Ajout</span>
+              </button>
+
+              <!-- Modal Add -->
+              
+             <!-- Modal Add -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+
+
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header">
+              <h3 class="mb-0">Tableau des Commandes</h3>
+              <p class="text-sm mb-0">
+
+              </p>
+            </div>
+            <div class="table-responsive py-4">
+              <table class="table table-flush" id="datatable-buttons">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Date</th>
+                    <th>Nom Client</th>
+                    <th>Produits</th>
+                    <th>total</th>
+                    <th>#</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Date</th>
+                    <th>Nom Client</th>
+                    <th>Produits</th>
+                    <th>Total</th>
+                    <th>#</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+
+                  <tr  th:each="commande, stat : ${commande}">
+                    <td th:text="${#dates.format(commande.date, 'dd-MM-yyyy HH:mm')}"> </td>
+                    <td>	[[${commande.nom_client}]]</td>
+                    <td>
+                        <table class="table align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    
+                                    
+                                    <th>Liste des produits</th>
+
+                                    <th>Prix UN.</th>
+
+                                    <th>Quantité</th>
+                                    
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="prods, x : ${commande.prods}">
+                                  <td th:each="produit : ${produit}" th:if="${produit.id} == ${commande.prods[x.index].nomProdCom}">
+                                    [[${produit.nomProd}]]
+                                  </td>
+                                  <td th:each="produit : ${produit}" th:if="${produit.id} == ${commande.prods[x.index].nomProdCom}">
+                                    
+                                    <span th:text="${#numbers.formatDecimal(commande.prods[x.index].prixProdCom,1,'DEFAULT',2,'COMMA')}" ></span> 
+                                    <span style="color:black;font-weight:bold"> TND </span>
+                                  </td>
+                                  <td th:each="produit : ${produit}" th:if="${produit.id} == ${commande.prods[x.index].nomProdCom}">
+                                    [[${commande.prods[x.index].qteProdCom}]]
+                                  </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td style="font-weight:bold" >
+                      <span class="h2 font-weight-bold mb-0 text-black-50" th:text="${#numbers.formatDecimal(commande.Total,1,'DEFAULT',2,'COMMA')}" ></span> 
+                      <span style="color:black;font-weight:bold"> TND </span>
+                    </td>
+
+                    <td>
+                        <a role="button" class="btn btn-dark  btn-icon-only" 
+                        th:href="@{'/view-facture/' + ${commande.id}}" >
+                          
+                            <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+                    </a> 
+
+                       
+                      
+
+                     <!-- <button type="button" class="btn bg-info btn-icon-only" data-toggle="modal"
+                        data-target="#modal-edit" th:attr="data-target='#modal-edit'+*{com.id}">
+                        <span class="btn-inner--icon"><i class="fas fa-user-edit"></i></span>
+                      </button> -->
+
+                      <button type="button" class="btn btn-youtube btn-icon-only" data-toggle="modal"
+                        th:attr="data-target='#modal-notification'+*{commande.id}">
+                        <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
+                      </button> 
+
+                      <!-- Modal Delete -->
+                      <div class="modal fade" th:id="*{'modal-notification'+{commande.id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="modal-notification" aria-hidden="true">
+
+                        <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
+
+                          <div class="modal-content bg-gradient-danger">
+
+                            <div class="modal-header">
+                              <h6 class="modal-title" id="modal-title-notification">Alert !</h6>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                              <div class="py-3 text-center">
+                                <i class="ni ni-basket ni-3x"></i>
+                                <h4 class="heading mt-4">Cet article sera définitivement supprimé !</h4>
+
+                              </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+
+                              <button type="button" class="btn btn-white"
+                                data-dismiss="modal">Annuler</button>
+
+                              <form action="/deletecommande">  
+                                <input type="hidden" name="id" th:value="${commande.id}" />
+                              <input type="submit" class="btn btn-link text-white ml-auto"value="Supprimer" />
+                              
+                              </form>
+                             
+                            </div>
+
+                          </div>
+
+                        </div>
+
+
+
+                      </div>
+                      <!-- Modal Delete -->
+
+                    </td>
+                  </tr>
+                 
+
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Footer -->
+      <div th:replace="fragments/footer :: footer"></div>
+      <!-- Footer -->
+
+
+
+
+    </div>
+  </div>
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <!-- Optional JS -->
+  <script src="../../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+  <script src="../../assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+  <!-- Argon JS -->
+  <script src="../../assets/js/argon.js?v=1.1.0"></script>
+  <!-- Demo JS - remove this in your project -->
+  <script src="../../assets/js/demo.min.js"></script>
+
+  <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      'use strict';
+      window.addEventListener('load', function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+          form.addEventListener('submit', function (event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+  </script>
+
+
+</body>
+
+</html>

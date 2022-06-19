@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--start head -->
+<div th:replace="fragments/head :: head"></div>
+<!--end head -->
+ 
+ <body>
+  
+  <!-- Sidenav -->
+  <div th:replace="fragments/nav :: nav"></div>
+  <!-- Sidenav -->
+
+   <!-- Main content -->
+   <div class="main-content" id="panel">
+     <!-- Topnav -->
+ 
+    <div th:replace="fragments/header :: header"></div>
+    <!-- Topnav -->
+
+     <!-- Header -->
+     <!-- Header -->
+     <div class="header pb-6">
+       <div class="container-fluid">
+         <div class="header-body">
+           <div class="row align-items-center py-4">
+             <div class="col-lg-6 col-7">
+               <h6 class="h2 d-inline-block mb-0">Dashboard</h6>
+               <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                 <ol class="breadcrumb breadcrumb-links">
+                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                   <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
+                   <li class="breadcrumb-item active" aria-current="page">Alternative</li>
+                 </ol>
+               </nav> -->
+             </div>
+             <!-- <div class="col-lg-6 col-5 text-right">
+               <a href="#" class="btn btn-sm btn-neutral">New</a>
+               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+             </div> -->
+           </div>
+         </div>
+       </div>
+     </div>
+     <!-- Page content -->
+     <div class="container-fluid mt--6">
+       <div class="row">
+         <div class="col-xl-3 col-md-6">
+           <div class="card bg-gradient-primary border-0">
+             <!-- Card body -->
+             <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">N° Produits</h5>
+                  <span class="h2 font-weight-bold mb-0 text-white">[[${pr}]] </span>
+                 
+                </div>
+                
+              </div>
+              
+            </div>
+           </div>
+         </div>
+         <div class="col-xl-3 col-md-6">
+           <div class="card bg-gradient-info border-0">
+             <!-- Card body -->
+             <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">N° Fournisseurs</h5>
+                  <span class="h2 font-weight-bold mb-0 text-white">[[${fr}]] </span>
+                 
+                </div>
+                
+              </div>
+              
+            </div>
+           </div>
+         </div>
+         <div class="col-xl-3 col-md-6">
+           <div class="card bg-gradient-danger border-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">N° Commandes</h5>
+                  <span class="h2 font-weight-bold mb-0 text-white">[[${cm}]] </span>
+                 
+                </div>
+                
+              </div>
+              
+            </div>
+           </div>
+         </div>
+         <div class="col-xl-3 col-md-6">
+           <div class="card bg-gradient-default border-0">
+             <!-- Card body -->
+             <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0 text-white">Revenu total</h5>
+                  <span class="h2 font-weight-bold mb-0 text-white" th:text="${#numbers.formatDecimal(total,1,'DEFAULT',2,'COMMA')}" ></span>
+                  <span style="color:red;font-weight:bold">  TND  </span>  
+                 
+                </div>
+                
+              </div>
+              
+            </div>
+           </div>
+         </div>
+       </div>
+       <div class="card-deck flex-column flex-xl-row">
+         <div class="card">
+           <div class="card-header bg-transparent">
+             <h6 class="text-muted text-uppercase ls-1 mb-1">Overview</h6>
+             <h2 class="h3 mb-0">Sales value</h2>
+           </div>
+           <div class="card-body">
+             <!-- Chart -->
+             <div class="chart">
+               <!-- Chart wrapper -->
+               <canvas id="chart-sales" class="chart-canvas"></canvas>
+             </div>
+           </div>
+         </div>
+         <div class="card">
+           <div class="card-header bg-transparent">
+             <div class="row align-items-center">
+               <div class="col">
+                 <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
+                 <h2 class="h3 mb-0">Total orders</h2>
+               </div>
+             </div>
+           </div>
+           <div class="card-body">
+             <!-- Chart -->
+             <div class="chart">
+               <canvas id="chart-bars" class="chart-canvas"></canvas>
+             </div>
+           </div>
+         </div>
+        
+       </div>
+     
+      
+        <!-- Footer -->
+      <div th:replace="fragments/footer :: footer"></div>
+      <!-- Footer -->
+      
+     </div>
+   </div>
+   <!-- Argon Scripts -->
+   <!-- Core -->
+   <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
+   <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>
+   <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+   <script src="../../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+   <!-- Optional JS -->
+   <script src="../../assets/vendor/chart.js/dist/Chart.min.js"></script>
+   <script src="../../assets/vendor/chart.js/dist/Chart.extension.js"></script>
+   <script src="../../assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+   <script src="../../assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+   <!-- Argon JS -->
+   <script src="../../assets/js/argon.js?v=1.1.0"></script>
+   
+   <!-- Demo JS - remove this in your project -->
+   <script src="../../assets/js/demo.min.js"></script>
+ </body>
+ 
+ </html>
